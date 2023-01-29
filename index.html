@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Searcher</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="index.js" defer></script>
+
+</head>
+<body>
+    <h1>HELLO</h1>
+    <div class="container">
+        <form class="Artist search" id ='artist-search'>
+          <h3>Artist Search</h3>
+            <input
+            id="search"
+            type="text"
+            name="name"
+            value=""
+            placeholder="Enter Artist Name"
+            class="input-text"
+          />
+          <br />
+          <br />
+          <input
+            type="submit"
+            name="submit"
+            value="Search For Artist"
+            class="submit"
+          />
+        </form>
+      </div>
+    <div class="container">
+      <form class="Genre search" id ='genre-search'>
+        <h3>Genre + Country Search</h3>
+          <input
+          id="search"
+          type="text"
+          name="name"
+          value=""
+          placeholder="Enter Genre Name"
+          class="input-text"
+        />
+        <br />
+        <br />
+
+        <select id="selectCountry">
+          <option>Choose a Country</option>
+        </select>
+        <br />
+        <br />
+        <input
+          type="submit"
+          name="submit"
+          value="Let's See What We Got Here"
+          class="submit"
+        />
+      </form>
+    </div>  
+      <div id="artist-collection"></div>
+</body>
+</html>

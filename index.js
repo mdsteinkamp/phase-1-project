@@ -1,9 +1,21 @@
-//Event listener for Artis Search form, sends user input to artistSearch fetch fn
+//Event listener for Artist Search form, sends user input to artistSearch fetch fn
 const artistSearchBtn = document.querySelector('#artist-search')
 artistSearchBtn.addEventListener('submit', (e) => {
     e.preventDefault()
     artistSearch((e.target.search.value).toUpperCase())
 })
+
+//Event listener for Genre & Country form, sends user input to genreCountrySearch fetch fn
+const genSearchBtn = document.querySelector("#genre-search")
+genSearchBtn.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const inputGenre = e.target.gensearch.value
+    const inputCountry = e.target.selectCountry.value
+    console.log(e.target.gensearch.value)
+    // console.log(e.target.selectCountry.value)
+    genreCountrySearch(inputGenre, inputCountry)
+})
+
 
 //capitalizes first letter of each user input word to prep for fetch
 //removed as words like 'of' are lowercase in API return
@@ -17,7 +29,7 @@ artistSearchBtn.addEventListener('submit', (e) => {
 
 //GET request based on artist search limited to 10 returned results
 function artistSearch(artistName) {
-    fetch(`https://musicbrainz.org/ws/2/artist/?query=${artistName}&limit=2`, {
+    fetch(`https://musicbrainz.org/ws/2/artist/?query=${artistName}&limit=20`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -28,6 +40,31 @@ function artistSearch(artistName) {
     .then((resp) => resp.json())
     .then(data => matchArtist(artistName, data))
 }
+
+// root https://musicbrainz.org/ws/2/
+//  browse:   /<RESULT_ENTITY_TYPE>?<BROWSING_ENTITY_TYPE>=<MBID>&limit=<LIMIT>&offset=<OFFSET>&inc=<INC>
+// http://musicbrainz.org/ws/2/tag/?query=shoegaze
+// http://musicbrainz.org/ws/2/tag/?query=${genre}`, {
+// http://musicbrainz.org/ws/2/country?query=${country}
+// http://musicbrainz.org/ws/2/genre/all?limit=<LIMIT>&offset=<OFFSET>
+// %20AND%20country:${country}
+
+// http://musicbrainz.org/ws/2/release?label=47e718e1-7ee4-460c-b1cc-1192a841c6e5&offset=12&limit=2
+
+
+function genreCountrySearch(genre, country) {
+    fetch(`http://musicbrainz.org/ws/2/artist?area=6a264f94-6ff1-30b1-9a81-41f7bfabd616`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'user-agent': 'Music Searcher 1.0 (mdsteinkamp@gmail.com)'
+        },
+        mode: 'cors'
+    })
+    .then((resp) => resp.json())
+    .then(data => console.log(data))
+}
+
 
 //Matches the artist based on user input from list returned from API, sends result to renderArtist fn
 function matchArtist(artistName, artistObj) {
@@ -96,6 +133,7 @@ function countrySelect(getCountries) {
         const opt = countries[i];
         const el = document.createElement("option");
         el.textContent = opt;
+        el.setAttribute('id', 'country')
         el.value = opt;
         select.appendChild(el);
     }

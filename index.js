@@ -50,10 +50,11 @@ function artistSearch(artistName) {
 // %20AND%20country:${country}
 
 // http://musicbrainz.org/ws/2/release?label=47e718e1-7ee4-460c-b1cc-1192a841c6e5&offset=12&limit=2
+// artist browse with finland MBID: http://musicbrainz.org/ws/2/artist?area=6a264f94-6ff1-30b1-9a81-41f7bfabd616&limit=100&offset=100
 
-
+//currently searching cob MBID with releases parameter
 function genreCountrySearch(genre, country) {
-    fetch(`http://musicbrainz.org/ws/2/artist?area=6a264f94-6ff1-30b1-9a81-41f7bfabd616`, {
+    fetch(`http://musicbrainz.org/ws/2/artist/f57e14e4-b030-467c-b202-539453f504ec?inc=releases`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',

@@ -83,13 +83,20 @@ function renderReleases(releaseArr) {
     h4.textContent = "Official Releases:"
     const releases = releaseArr
     const officialReleases = releaseArr.filter(release => release.status === 'Official')
-    console.log(officialReleases)
+    const sortedOfficialReleases = officialReleases.sort(function (a, b) {
+        let c = new Date(a.date)
+        let d = new Date(b.date)
+        return c - d
+    })
+    console.log(sortedOfficialReleases)
+    const cleanedReleases = removeDupRelease(sortedOfficialReleases)
+    console.log(cleanedReleases)
     const card = document.querySelector('#release-collection')
     card.appendChild(h4)
     console.log(card)
-    releases.forEach(release => {
+    cleanedReleases.forEach(release => {
         const li = document.createElement('li')
-        li.textContent = `${release.title} - ${release.disambiguation}, year ${release.date}`
+        li.textContent = `${release.title}, released ${release.date}`
         card.appendChild(li)
     })
     // const select = document.createElement('select')
@@ -106,6 +113,14 @@ const tagFinder = function(artistName, artistCollection) {
         const liTag = document.createElement('li')
         liTag.textContent = tag.name
         artistCollection.appendChild(liTag)
+    })
+}
+
+
+function removeDupRelease (releaseArr) {
+    let seen = {}
+    return releaseArr.filter(function(album) {
+        return seen.hasOwnProperty(album.title) ? false : (seen[album.title] = true)
     })
 }
 

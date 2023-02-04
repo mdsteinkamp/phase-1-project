@@ -96,12 +96,10 @@ function renderReleases(releaseArr) {
     // console.log(card)
     cleanedReleases.forEach(release => {
         const li = document.createElement('li')
-        li.textContent = `${release.title}, released ${release.date}`
+        li.textContent = `${release.title}, released ${release.date} `
         card.appendChild(li)
     })
-    // const select = document.createElement('select')
-    // select.setAttribute('id', 'releaseselect')
-    // const card = document.querySelector('#artist-collection')
+    releaseRater()
 }
 
 //loops through tags in artist & posts to DOM with Genre header under artist info
@@ -128,13 +126,19 @@ function releaseRater () {
     const node = document.querySelector('#release-collection')
     const releases = node.getElementsByTagName('li')
     for (const release of releases) {
-        console.log(release.textContent)
+        const selectList = document.createElement('select')
+        selectList.setAttribute('id', 'releaseselect')
+        const selectOptions = ['Five 🤘', 'Four 👍', 'Three 👌', 'Two 🤏', 'One 👎']
+        for (let i = 0; i < selectOptions.length; i++) {
+            const option = document.createElement('option')
+            option.value = selectOptions[i]
+            option.text = selectOptions[i]
+            selectList.appendChild(option)
+        }
+        release.appendChild(selectList)
+        
     }
 }
-
-
-
-
 
 
 

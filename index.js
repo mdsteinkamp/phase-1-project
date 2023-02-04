@@ -99,8 +99,8 @@ function renderReleases(releaseArr) {
         li.setAttribute('id', `${release.title}`)
         li.textContent = `${release.title}, released ${release.date} `
         const selectList = document.createElement('select')
-        selectList.setAttribute('id', 'releaseselect')
-        const selectOptions = ['Rate Album', 'Five 🤘', 'Four 👍', 'Three 👌', 'Two 🤏', 'One 👎']
+        selectList.setAttribute('id', `${release.title}`)
+        const selectOptions = ['Rate Album', '📀📀📀📀📀', '📀📀📀📀', '📀📀📀', '📀📀', '📀']
             for (let i = 0; i < selectOptions.length; i++) {
             const option = document.createElement('option')
             option.value = selectOptions[i]
@@ -137,6 +137,17 @@ function removeDupRelease (releaseArr) {
     })
 }
 
+//lists your release ratings with a timestamp
+function ratedReleases(event) {
+    const target = event.target
+    const releaseTitle = target.parentElement
+    console.log(releaseTitle.id)
+    const ratedReleases = document.querySelector("#rated-releases")
+    const p = document.createElement('p')
+    p.textContent = "You rated " + releaseTitle.id + " " + event.target.value + " on " +new Date
+    ratedReleases.appendChild(p)
+} 
+
 //adds select to every artist release with rating options
 // function releaseRater() {
 //     const node = document.querySelector('#release-collection')
@@ -155,16 +166,6 @@ function removeDupRelease (releaseArr) {
 //         release.appendChild(selectList)
 //     }
 // }
-
-function ratedReleases(event) {
-    const releaseTitle = document.querySelector('#releaseselect').parentNode
-    // cons
-    const ratedReleases = document.querySelector("#rated-releases")
-    const p = document.createElement('p')
-    p.textContent = releaseTitle.textContent
-    ratedReleases.appendChild(p)
-} 
-
 
 
 //generates object of countries with country code keys

@@ -94,13 +94,27 @@ function renderReleases(releaseArr) {
     // console.log(cleanedReleases)
     const card = document.querySelector('#release-collection')
     card.appendChild(h4)
-    // console.log(card)
     cleanedReleases.forEach(release => {
         const li = document.createElement('li')
+        li.setAttribute('id', `${release.title}`)
         li.textContent = `${release.title}, released ${release.date} `
+        const selectList = document.createElement('select')
+        selectList.setAttribute('id', 'releaseselect')
+        const selectOptions = ['Rate Album', 'Five 🤘', 'Four 👍', 'Three 👌', 'Two 🤏', 'One 👎']
+            for (let i = 0; i < selectOptions.length; i++) {
+            const option = document.createElement('option')
+            option.value = selectOptions[i]
+            option.text = selectOptions[i]
+            selectList.appendChild(option)
+            li.appendChild(selectList)
+        }
+        // select
+        // const option = document.createElement('option')
+        // option.value = selectOptions[i]
+        // option.text = selectOptions[i]
         card.appendChild(li)
+        selectList.addEventListener('change', (event) => ratedReleases(event))
     })
-    releaseRater()
 }
 
 //loops through tags in artist & posts to DOM with Genre header under artist info
@@ -124,24 +138,32 @@ function removeDupRelease (releaseArr) {
 }
 
 //adds select to every artist release with rating options
-function releaseRater () {
-    const node = document.querySelector('#release-collection')
-    const releases = node.getElementsByTagName('li')
-    for (const release of releases) {
-        const selectList = document.createElement('select')
-        selectList.setAttribute('id', 'releaseselect')
-        const selectOptions = ['Rate Album', 'Five 🤘', 'Four 👍', 'Three 👌', 'Two 🤏', 'One 👎']
-        for (let i = 0; i < selectOptions.length; i++) {
-            const option = document.createElement('option')
-            option.value = selectOptions[i]
-            option.text = selectOptions[i]
-            selectList.appendChild(option)
-        }
-        selectList.addEventListener('change', (event) => console.log(event))
-        release.appendChild(selectList)
-        
-    }
-}
+// function releaseRater() {
+//     const node = document.querySelector('#release-collection')
+//     const releases = node.getElementsByTagName('li')
+//     for (const release of releases) {
+//         const selectList = document.createElement('select')
+//         selectList.setAttribute('id', 'releaseselect')
+//         const selectOptions = ['Rate Album', 'Five 🤘', 'Four 👍', 'Three 👌', 'Two 🤏', 'One 👎']
+//         for (let i = 0; i < selectOptions.length; i++) {
+//             const option = document.createElement('option')
+//             option.value = selectOptions[i]
+//             option.text = selectOptions[i]
+//             selectList.appendChild(option)
+//         }
+//         selectList.addEventListener('change', (event) => ratedReleases(event))
+//         release.appendChild(selectList)
+//     }
+// }
+
+function ratedReleases(event) {
+    const releaseTitle = document.querySelector('#releaseselect').parentNode
+    // cons
+    const ratedReleases = document.querySelector("#rated-releases")
+    const p = document.createElement('p')
+    p.textContent = releaseTitle.textContent
+    ratedReleases.appendChild(p)
+} 
 
 
 

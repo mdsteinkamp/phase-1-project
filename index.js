@@ -29,6 +29,7 @@ function artistSearch(artistName) {
     })
     .then((resp) => resp.json())
     .then(data => matchArtist(artistName, data))
+    .catch((error) => alert('Artist not found try again!', error))
 }
 
 //GET request using artist MBID, will go through paginated artist releases based on offset +100
@@ -122,19 +123,21 @@ function removeDupRelease (releaseArr) {
     })
 }
 
+//adds select to every artist release with rating options
 function releaseRater () {
     const node = document.querySelector('#release-collection')
     const releases = node.getElementsByTagName('li')
     for (const release of releases) {
         const selectList = document.createElement('select')
         selectList.setAttribute('id', 'releaseselect')
-        const selectOptions = ['Five 🤘', 'Four 👍', 'Three 👌', 'Two 🤏', 'One 👎']
+        const selectOptions = ['Rate Album', 'Five 🤘', 'Four 👍', 'Three 👌', 'Two 🤏', 'One 👎']
         for (let i = 0; i < selectOptions.length; i++) {
             const option = document.createElement('option')
             option.value = selectOptions[i]
             option.text = selectOptions[i]
             selectList.appendChild(option)
         }
+        selectList.addEventListener('change', (event) => console.log(event))
         release.appendChild(selectList)
         
     }

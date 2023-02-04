@@ -88,12 +88,12 @@ function renderReleases(releaseArr) {
         let d = new Date(b.date)
         return c - d
     })
-    console.log(sortedOfficialReleases)
+    // console.log(sortedOfficialReleases)
     const cleanedReleases = removeDupRelease(sortedOfficialReleases)
-    console.log(cleanedReleases)
+    // console.log(cleanedReleases)
     const card = document.querySelector('#release-collection')
     card.appendChild(h4)
-    console.log(card)
+    // console.log(card)
     cleanedReleases.forEach(release => {
         const li = document.createElement('li')
         li.textContent = `${release.title}, released ${release.date}`
@@ -116,13 +116,27 @@ const tagFinder = function(artistName, artistCollection) {
     })
 }
 
-
+//removes duplicate releases from array via hashtable & looking up property 
 function removeDupRelease (releaseArr) {
     let seen = {}
     return releaseArr.filter(function(album) {
         return seen.hasOwnProperty(album.title) ? false : (seen[album.title] = true)
     })
 }
+
+function releaseRater () {
+    const node = document.querySelector('#release-collection')
+    const releases = node.getElementsByTagName('li')
+    for (const release of releases) {
+        console.log(release.textContent)
+    }
+}
+
+
+
+
+
+
 
 //generates object of countries with country code keys
 const getCountries = function(lang = 'en') {

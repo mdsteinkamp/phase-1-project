@@ -166,10 +166,10 @@ sortLink.addEventListener('click', () => {
     allRated.sort(function(a, b) {
         return a.textContent.slice(-17, -16).localeCompare(b.textContent.slice(-17, -16))
     })
-    console.log(allRated)
+    allRatedReversed = allRated.reverse()
     const sortedReleaseList = document.querySelector('#rated-releases')
     sortedReleaseList.innerHTML = ''
-    allRated.forEach(release => {
+    allRatedReversed.forEach(release => {
         const p = document.createElement('p')
         console.log(release)
         p.textContent = (release.textContent)

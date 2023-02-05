@@ -16,7 +16,6 @@ artistSearchBtn.addEventListener('submit', (e) => {
 //     genreCountrySearch(inputGenre, inputCountry)
 // })
 
-
 //GET request based on artist search limited to 10 returned results
 function artistSearch(artistName) {
     fetch(`https://musicbrainz.org/ws/2/artist/?query=${artistName}&limit=20`, {
@@ -53,6 +52,20 @@ function artistReleaseFetch(artistID, offset = 0, previousResponse = []) {
         renderReleases(allReleasesArr)
     })
 }
+
+// function trackListFetch(albumID) {
+//         fetch(`https://musicbrainz.org/ws/2/release/${albumID}`, {
+//             method: 'GET',
+//             headers: {
+//                 'Accept': 'application/json',
+//                 'user-agent': 'Music Searcher 1.0 (mdsteinkamp@gmail.com)'
+//             },
+//             mode: 'cors'
+//         })
+//         .then((resp) => resp.json())
+//         .then(data => console.log(data))
+//         .catch((error) => alert('Album not found try again!', error))
+// }
 
 //Matches the artist based on user input from list returned from API, sends result to renderArtist fn
 function matchArtist(artistName, artistObj) {
@@ -95,12 +108,14 @@ function renderReleases(releaseArr) {
     const card = document.querySelector('#release-collection')
     card.appendChild(h4)
     cleanedReleases.forEach(release => {
+        // console.log(release.id)
         const li = document.createElement('li')
         li.setAttribute('id', `${release.title}`)
         li.textContent = `${release.title}, released ${release.date} `
+        // li.addEventListener('click', (event) => trackListFetch(release.id))
         const selectList = document.createElement('select')
         selectList.setAttribute('id', `${release.title}`)
-        const selectOptions = ['Rate Album', '📀📀📀📀📀', '📀📀📀📀', '📀📀📀', '📀📀', '📀']
+        const selectOptions = ['Rate Album', '5/5', '4/5', '3/5', '2/5', '1/5']
             for (let i = 0; i < selectOptions.length; i++) {
             const option = document.createElement('option')
             option.value = selectOptions[i]
@@ -108,10 +123,6 @@ function renderReleases(releaseArr) {
             selectList.appendChild(option)
             li.appendChild(selectList)
         }
-        // select
-        // const option = document.createElement('option')
-        // option.value = selectOptions[i]
-        // option.text = selectOptions[i]
         card.appendChild(li)
         selectList.addEventListener('change', (event) => ratedReleases(event))
     })
@@ -141,12 +152,37 @@ function removeDupRelease (releaseArr) {
 function ratedReleases(event) {
     const target = event.target
     const releaseTitle = target.parentElement
-    console.log(releaseTitle.id)
     const ratedReleases = document.querySelector("#rated-releases")
     const p = document.createElement('p')
-    p.textContent = "You rated " + releaseTitle.id + " " + event.target.value + " on " +new Date
+    p.setAttribute('class', 'rated')
+    p.textContent = "You rated " + releaseTitle.id + " " + event.target.value + " on " + new Date().toISOString().slice(0,10)
     ratedReleases.appendChild(p)
 } 
+
+const sortLink = document.querySelector('#sorter')
+sortLink.addEventListener('click', () => {
+    let allRated = document.getElementsByClassName('rated')
+    allRated = Array.prototype.slice.call(allRated)
+    allRated.sort(function(a, b) {
+        return a.textContent.slice(-17, -16).localeCompare(b.textContent.slice(-17, -16))
+    })
+    console.log(allRated)
+    const sortedReleaseList = document.querySelector('#rated-releases')
+    sortedReleaseList.innerHTML = ''
+    allRated.forEach(release => {
+        const p = document.createElement('p')
+        console.log(release)
+        p.textContent = (release.textContent)
+        sortedReleaseList.appendChild(p)
+    })
+})
+
+// function sortObject(object) {
+//     return Object.keys(object).sort().reduce(function (result, key) {
+//         result[key] = object[key];
+//         return result;
+//     }, {});    
+// }
 
 //adds select to every artist release with rating options
 // function releaseRater() {

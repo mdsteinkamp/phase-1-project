@@ -162,9 +162,9 @@ function ratedReleases(event) {
 const sortLink = document.querySelector('#sorter')
 sortLink.addEventListener('click', () => {
     let allRated = document.getElementsByClassName('rated')
-    allRated = Array.prototype.slice.call(allRated)
+    allRated = Array.from(allRated)
     allRated.sort(function(a, b) {
-        return b.textContent.slice(-17, -16).localeCompare(a.textContent.slice(-17, -16))
+        return b.textContent.slice(-17, -16) - (a.textContent.slice(-17, -16))
     })
     // allRatedReversed = allRated.reverse()
     const sortedReleaseList = document.querySelector('#rated-releases')

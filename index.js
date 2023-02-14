@@ -5,18 +5,7 @@ artistSearchBtn.addEventListener('submit', (e) => {
     artistSearch((e.target.search.value).toUpperCase())
 })
 
-//Event listener for Genre & Country form, sends user input to genreCountrySearch fetch fn
-// const genSearchBtn = document.querySelector("#genre-search")
-// genSearchBtn.addEventListener('submit', (e) => {
-//     e.preventDefault()
-//     const inputGenre = e.target.gensearch.value
-//     const inputCountry = e.target.selectCountry.value
-//     // console.log(e.target.gensearch.value)
-//     // console.log(e.target.selectCountry.value)
-//     genreCountrySearch(inputGenre, inputCountry)
-// })
-
-//GET request based on artist search limited to 10 returned results
+//GET request based on artist search limited to 20 returned results
 function artistSearch(artistName) {
     fetch(`https://musicbrainz.org/ws/2/artist/?query=${artistName}&limit=20`, {
         method: 'GET',
@@ -52,20 +41,6 @@ function artistReleaseFetch(artistID, offset = 0, previousResponse = []) {
         renderReleases(allReleasesArr)
     })
 }
-
-// function trackListFetch(albumID) {
-//         fetch(`https://musicbrainz.org/ws/2/release/${albumID}`, {
-//             method: 'GET',
-//             headers: {
-//                 'Accept': 'application/json',
-//                 'user-agent': 'Music Searcher 1.0 (mdsteinkamp@gmail.com)'
-//             },
-//             mode: 'cors'
-//         })
-//         .then((resp) => resp.json())
-//         .then(data => console.log(data))
-//         .catch((error) => alert('Album not found try again!', error))
-// }
 
 //Matches the artist based on user input from list returned from API, sends result to renderArtist fn
 function matchArtist(artistName, artistObj) {
@@ -239,7 +214,7 @@ const getCountries = function(lang = 'en') {
 // }
 // countrySelect(getCountries)
 
-
+//Example API queries
 // root https://musicbrainz.org/ws/2/
 //  browse:   /<RESULT_ENTITY_TYPE>?<BROWSING_ENTITY_TYPE>=<MBID>&limit=<LIMIT>&offset=<OFFSET>&inc=<INC>
 // http://musicbrainz.org/ws/2/tag/?query=shoegaze
@@ -250,3 +225,29 @@ const getCountries = function(lang = 'en') {
 
 // http://musicbrainz.org/ws/2/release?label=47e718e1-7ee4-460c-b1cc-1192a841c6e5&offset=12&limit=2
 // artist browse with finland MBID: http://musicbrainz.org/ws/2/artist?area=6a264f94-6ff1-30b1-9a81-41f7bfabd616&limit=100&offset=100
+
+//Event listener for Genre & Country form, sends user input to genreCountrySearch fetch fn
+// const genSearchBtn = document.querySelector("#genre-search")
+// genSearchBtn.addEventListener('submit', (e) => {
+//     e.preventDefault()
+//     const inputGenre = e.target.gensearch.value
+//     const inputCountry = e.target.selectCountry.value
+//     // console.log(e.target.gensearch.value)
+//     // console.log(e.target.selectCountry.value)
+//     genreCountrySearch(inputGenre, inputCountry)
+// })
+
+// function trackListFetch(albumID) {
+//         fetch(`https://musicbrainz.org/ws/2/release/${albumID}`, {
+//             method: 'GET',
+//             headers: {
+//                 'Accept': 'application/json',
+//                 'user-agent': 'Music Searcher 1.0 (mdsteinkamp@gmail.com)'
+//             },
+//             mode: 'cors'
+//         })
+//         .then((resp) => resp.json())
+//         .then(data => console.log(data))
+//         .catch((error) => alert('Album not found try again!', error))
+// }
+

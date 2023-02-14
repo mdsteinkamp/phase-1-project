@@ -15,10 +15,10 @@ rating.
 
 
 ## Future Plans
-POST a snapshot of a list of album ratings. In the future the user can re-rate the album and see how their
+- POST a snapshot of a list of album ratings. In the future the user can re-rate the album and see how their
 personal taste has changed over time.
 
-Style the app
+- Style the app
 
-Convert Country code to full country name after searchinig an artist
+- Convert Country code to full country name after searchinig an artist
 

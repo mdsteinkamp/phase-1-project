@@ -56,12 +56,10 @@ function renderArtist(artistName) {
     card.className = 'card'
     const h2 = document.createElement('h2')
     const pCountry = document.createElement('p')
-    // const pGenre = document.createElement('p')
     h2.textContent = `${artistName.name}`
     pCountry.textContent = `Country: ${artistName.country}`
-    card.appendChild(h2)
-    card.appendChild(pCountry)
-    artistCollection.appendChild(card)
+    card.append(h2, pCountry)
+    artistCollection.append(card)
     tagFinder(artistName, artistCollection)
     artistReleaseFetch(artistName.id)
 }
@@ -77,11 +75,10 @@ function renderReleases(releaseArr) {
         let d = new Date(b.date)
         return c - d
     })
-    // console.log(sortedOfficialReleases)
     const cleanedReleases = removeDupRelease(sortedOfficialReleases)
-    // console.log(cleanedReleases)
     const card = document.querySelector('#release-collection')
     card.appendChild(h4)
+    console.log(cleanedReleases)
     cleanedReleases.forEach(release => {
         // console.log(release.id)
         const li = document.createElement('li')
@@ -95,10 +92,10 @@ function renderReleases(releaseArr) {
             const option = document.createElement('option')
             option.value = selectOptions[i]
             option.text = selectOptions[i]
-            selectList.appendChild(option)
-            li.appendChild(selectList)
+            selectList.append(option)
+            li.append(selectList)
         }
-        card.appendChild(li)
+        card.append(li)
         selectList.addEventListener('change', (event) => ratedReleases(event))
     })
 }
@@ -152,13 +149,6 @@ sortLink.addEventListener('click', () => {
     })
 })
 
-// function sortObject(object) {
-//     return Object.keys(object).sort().reduce(function (result, key) {
-//         result[key] = object[key];
-//         return result;
-//     }, {});    
-// }
-
 //adds select to every artist release with rating options
 // function releaseRater() {
 //     const node = document.querySelector('#release-collection')
@@ -196,58 +186,4 @@ const getCountries = function(lang = 'en') {
     }
     return countries
 }
-
-//loops through country names & adds to HTML select
-// function countrySelect(getCountries) {
-//     const select = document.getElementById("selectCountry");
-//     const countries = Object.values(getCountries())
-//     countries.sort()
-
-//     for(let i = 0; i < countries.length; i++) {
-//         const opt = countries[i];
-//         const el = document.createElement("option");
-//         el.textContent = opt;
-//         el.setAttribute('id', 'country')
-//         el.value = opt;
-//         select.appendChild(el);
-//     }
-// }
-// countrySelect(getCountries)
-
-//Example API queries
-// root https://musicbrainz.org/ws/2/
-//  browse:   /<RESULT_ENTITY_TYPE>?<BROWSING_ENTITY_TYPE>=<MBID>&limit=<LIMIT>&offset=<OFFSET>&inc=<INC>
-// http://musicbrainz.org/ws/2/tag/?query=shoegaze
-// http://musicbrainz.org/ws/2/tag/?query=${genre}`, {
-// http://musicbrainz.org/ws/2/country?query=${country}
-// http://musicbrainz.org/ws/2/genre/all?limit=<LIMIT>&offset=<OFFSET>
-// %20AND%20country:${country}
-
-// http://musicbrainz.org/ws/2/release?label=47e718e1-7ee4-460c-b1cc-1192a841c6e5&offset=12&limit=2
-// artist browse with finland MBID: http://musicbrainz.org/ws/2/artist?area=6a264f94-6ff1-30b1-9a81-41f7bfabd616&limit=100&offset=100
-
-//Event listener for Genre & Country form, sends user input to genreCountrySearch fetch fn
-// const genSearchBtn = document.querySelector("#genre-search")
-// genSearchBtn.addEventListener('submit', (e) => {
-//     e.preventDefault()
-//     const inputGenre = e.target.gensearch.value
-//     const inputCountry = e.target.selectCountry.value
-//     // console.log(e.target.gensearch.value)
-//     // console.log(e.target.selectCountry.value)
-//     genreCountrySearch(inputGenre, inputCountry)
-// })
-
-// function trackListFetch(albumID) {
-//         fetch(`https://musicbrainz.org/ws/2/release/${albumID}`, {
-//             method: 'GET',
-//             headers: {
-//                 'Accept': 'application/json',
-//                 'user-agent': 'Music Searcher 1.0 (mdsteinkamp@gmail.com)'
-//             },
-//             mode: 'cors'
-//         })
-//         .then((resp) => resp.json())
-//         .then(data => console.log(data))
-//         .catch((error) => alert('Album not found try again!', error))
-// }
 

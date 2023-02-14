@@ -1,4 +1,4 @@
-# Musical Album Rater
+# Musical Album Rater & Taste Tracker
 Musical Album Rater is a way to rate official album releases of an artist/band. It utilizes the Musicbrainz
 API to search for an artist/band return its country of origin and various genre tags. Official releases are
 then filtered from bootlegs etc to the DOM with functionality to rate the albums on a scale of 1-5 then

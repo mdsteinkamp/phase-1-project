@@ -78,13 +78,10 @@ function renderReleases(releaseArr) {
     const cleanedReleases = removeDupRelease(sortedOfficialReleases)
     const card = document.querySelector('#release-collection')
     card.appendChild(h4)
-    console.log(cleanedReleases)
     cleanedReleases.forEach(release => {
-        // console.log(release.id)
         const li = document.createElement('li')
         li.setAttribute('id', `${release.title}`)
         li.textContent = `${release.title}, released ${release.date} `
-        // li.addEventListener('click', (event) => trackListFetch(release.id))
         const selectList = document.createElement('select')
         selectList.setAttribute('id', `${release.title}`)
         const selectOptions = ['Rate Album', '5/5', '4/5', '3/5', '2/5', '1/5']
@@ -138,52 +135,12 @@ sortLink.addEventListener('click', () => {
     allRated.sort(function(a, b) {
         return b.textContent.slice(-17, -16) - (a.textContent.slice(-17, -16))
     })
-    // allRatedReversed = allRated.reverse()
     const sortedReleaseList = document.querySelector('#rated-releases')
     sortedReleaseList.innerHTML = ''
     allRated.forEach(release => {
         const p = document.createElement('p')
-        console.log(release)
         p.textContent = (release.textContent)
         sortedReleaseList.appendChild(p)
     })
 })
-
-//adds select to every artist release with rating options
-// function releaseRater() {
-//     const node = document.querySelector('#release-collection')
-//     const releases = node.getElementsByTagName('li')
-//     for (const release of releases) {
-//         const selectList = document.createElement('select')
-//         selectList.setAttribute('id', 'releaseselect')
-//         const selectOptions = ['Rate Album', 'Five 🤘', 'Four 👍', 'Three 👌', 'Two 🤏', 'One 👎']
-//         for (let i = 0; i < selectOptions.length; i++) {
-//             const option = document.createElement('option')
-//             option.value = selectOptions[i]
-//             option.text = selectOptions[i]
-//             selectList.appendChild(option)
-//         }
-//         selectList.addEventListener('change', (event) => ratedReleases(event))
-//         release.appendChild(selectList)
-//     }
-// }
-
-
-//generates object of countries with country code keys
-const getCountries = function(lang = 'en') {
-    const A = 65
-    const Z = 90
-    const countryName = new Intl.DisplayNames([lang], { type: 'region' });
-    const countries = {}
-    for(let i=A; i<=Z; ++i) {
-        for(let j=A; j<=Z; ++j) {
-            let code = String.fromCharCode(i) + String.fromCharCode(j)
-            let name = countryName.of(code)
-            if (code !== name) {
-                countries[code] = name
-            }
-        }
-    }
-    return countries
-}
 

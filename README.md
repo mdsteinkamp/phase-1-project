@@ -18,4 +18,7 @@ rating.
 POST a snapshot of a list of album ratings. In the future the user can re-rate the album and see how their
 personal taste has changed over time.
 
-Artist search ex: https://musicbrainz.org/ws/2/artist/?query=leprous
+Style the app
+
+Convert Country code to full country name after searchinig an artist
+

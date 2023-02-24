@@ -1,11 +1,9 @@
-//Event listener for Artist Search form, sends user input to artistSearch fetch fn
 const artistSearchBtn = document.querySelector('#artist-search')
 artistSearchBtn.addEventListener('submit', (e) => {
     e.preventDefault()
     artistSearch((e.target.search.value).toUpperCase())
 })
 
-//GET request based on artist search limited to 20 returned results
 function artistSearch(artistName) {
     fetch(`https://musicbrainz.org/ws/2/artist/?query=${artistName}&limit=20`, {
         method: 'GET',
@@ -20,8 +18,6 @@ function artistSearch(artistName) {
     .catch((error) => alert('Artist not found try again!', error))
 }
 
-//GET request using artist MBID, will go through paginated artist releases based on offset +100
-//and return ALL releases in array to send to renderReleases fn
 function artistReleaseFetch(artistID, offset = 0, previousResponse = []) {
     fetch(`http://musicbrainz.org/ws/2/release?artist=${artistID}&limit=100&offset=${offset}`, {
         method: 'GET',
@@ -42,14 +38,12 @@ function artistReleaseFetch(artistID, offset = 0, previousResponse = []) {
     })
 }
 
-//Matches the artist based on user input from list returned from API, sends result to renderArtist fn
 function matchArtist(artistName, artistObj) {
     const artistArr = artistObj.artists
     const matchedArtist = artistArr.find(artist => artist.name.toUpperCase() === artistName)
     renderArtist(matchedArtist)
 }
 
-//renders the artist info to the DOM
 function renderArtist(artistName) {
     const artistCollection = document.querySelector('#artist-collection')
     const card = document.createElement('div')
@@ -64,7 +58,6 @@ function renderArtist(artistName) {
     artistReleaseFetch(artistName.id)
 }
 
-//renders official releases via filter to the DOM
 function renderReleases(releaseArr) {
     const h4 = document.createElement('h4')
     h4.textContent = "Official Releases:"
@@ -97,7 +90,6 @@ function renderReleases(releaseArr) {
     })
 }
 
-//loops through tags in artist & posts to DOM with Genre header under artist info
 const tagFinder = function(artistName, artistCollection) {
     const h4Genre = document.createElement('h4')
     h4Genre.textContent = "Genres: "
@@ -109,7 +101,6 @@ const tagFinder = function(artistName, artistCollection) {
     })
 }
 
-//removes duplicate releases from array via hashtable & looking up property 
 function removeDupRelease (releaseArr) {
     let seen = {}
     return releaseArr.filter(function(album) {
@@ -117,7 +108,6 @@ function removeDupRelease (releaseArr) {
     })
 }
 
-//lists your release ratings with a timestamp
 function ratedReleases(event) {
     const target = event.target
     const releaseTitle = target.parentElement
